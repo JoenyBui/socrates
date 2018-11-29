@@ -1,0 +1,31 @@
+version: '3.6'
+services:
+  app:
+    container_name: socrates-app
+    build:
+      context: ./app
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      - REDIS_HOST=redis
+    ports:
+      - "5000:5000"
+  redis:
+    container_name: socrates-redis
+    image: redis:3.2-alpine
+    volumes:
+      - redis_data:/data
+  postgres:
+    container_name: socrates-postgres
+    image: postgres:9.6-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - psqldata:/var/lib/pgsql/9.6/data
+      - psqlupgrade:/var/lib/pgsql/upgrade
+
+volumes:
+  redis_data:
+  psqldata:
+  psqlupgrade:
