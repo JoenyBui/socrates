@@ -7,8 +7,12 @@ services:
     depends_on:
       - redis
       - postgres
+      - flyway
     environment:
       - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
     ports:
       - "5000:5000"
   redis:
@@ -33,6 +37,15 @@ services:
     volumes:
       - psqldata:/var/lib/pgsql/9.6/data
       - psqlupgrade:/var/lib/pgsql/upgrade
+  flyway:
+    container_name: socrates-flyway
+    command: -url=jdbc:postgresql://postgres:5432/knowledge -user=shinalee -password=therapist2009 -connectRetries=60 migrate
+    build:
+      context: ./src/flyway
+    volumes:
+      - .:/flyway/sql
+    depends_on:
+      - postgres
 
 volumes:
   redis_data:
