@@ -3,16 +3,18 @@ import os
 from flask import Flask
 from redis import Redis
 
-from flask_sqlalchemy import SQLAlchemy
+from database import init_db
 
 user = os.environ.get('USER')
 
 app = Flask(__name__)
+app.config['DEBUG'] = True
 app.secret_key = os.environ.get('APP_SECRET_KEY', 'NO_KEY')
 
-redis = Redis(host=os.environ['REDIS_HOST'], port=os.environ['REDIS_PORT'])
-bind_port = int(os.environ['BIND_PORT'])
+redis = Redis(host=os.environ.get('REDIS_HOST', 'localhost'), port=os.environ.get('REDIS_PORT', 9379))
+bind_port = int(os.environ.get('BIND_PORT', 5000))
 
+init_db()
 
 @app.route('/')
 def hello():
