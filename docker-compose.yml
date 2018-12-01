@@ -20,8 +20,12 @@ services:
       - redis_data:/data
   postgres:
     container_name: socrates-postgres
-    image: postgres:9.6-alpine
+    build:
+      context: ./src/db
     environment: 
+      FILLA_DB_USER: shinalee
+      FILLA_DB_PASSWORD: therapist2009
+      FILLA_DB_DATABASE: knowledge
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:

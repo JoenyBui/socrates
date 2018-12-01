@@ -7,12 +7,13 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 # These env variables are the same ones used for the DB container
-user = os.environ.get('POSTGRES_USER', 'postgres')
-pwd = os.environ.get('POSTGRES_PASSWORD', 'postgres')
-db = os.environ.get('POSTGRES_DB', 'my_database')
+user = os.environ.get('POSTGRES_USER', 'shinalee')
+pwd = os.environ.get('POSTGRES_PASSWORD', 'therapist2009')
+db = os.environ.get('POSTGRES_DB', 'knowledge')
 host = os.environ.get('POSTGRES_HOST', 'localhost') # docker-compose creates a hostname alias with the service name
 port = os.environ.get('POSTGRES_PORT', 9432) # default postgres port 
-engine = create_engine('postgres://%s:%s@%s:%s/%s' % (user, pwd, host, port, db)) 
+conn = 'postgres://%s:%s@%s:%s/%s' % (user, pwd, host, port, db)
+engine = create_engine(conn) 
 
 Base = declarative_base()
 
