@@ -15,6 +15,19 @@ services:
       - POSTGRES_PORT=5432
     ports:
       - "5000:5000"
+  plato:
+    container_name: plato-app
+    build:
+      context: ./src/plato
+    command: python /code/app/manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - redis
+      - postgres
+      - flyway
+    environment:
+      - DEBUG=True 
+    ports:
+      - "8000:8000"
   redis:
     container_name: socrates-redis
     image: redis:3.2-alpine
