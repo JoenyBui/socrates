@@ -21,6 +21,10 @@ pipenv shell
 python --version
 ```
 
+## Plato App
+
+Need to create static folder before deployment.
+
 ## Flyway
 
 Migrations is done using flyway and plain SQL.
@@ -48,6 +52,7 @@ In order to be picked up by Flyway, SQL migrations must comply with the followin
   V2__Add a new table.sql
 ```
 The format we are using is the YYYYMMDDHHMM__DESCREPTION.sql
+
 The file name consists of the following parts:
 
 * Prefix: V for versioned, U for undo, and R for repeatable migrations 
@@ -84,6 +89,7 @@ docker run [options] [repo/]containerimage[:tag\digest] [command to run]
 | docker rm $(docker ps -a -q -f status=exited) | remove all containers with exit
 | docker stop <id> | stop a detached image
 | docker push \<name> | push repor into recognize registry
+| docker exec -it <containerIdOrName> bash | Login into a running container
 
 
 ## Docker Compose Setup

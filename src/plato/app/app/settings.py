@@ -14,7 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+PROJECT_DIR = os.path.dirname(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -23,9 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'j@v0q-t9@0rmje=^5+v8*#=7r$$(jz!3jji6^la1ogb%)!(1=u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+if os.getenv('DJANGO_ENV') == 'production':
+    DEBUG = False
+    ALLOWED_HOSTS = ['.socrates.com']
+else:
+    DEBUG = True
+    ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -84,11 +87,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.environ.get('DB_NAME', 'knowledge'),
-            'USER': os.environ.get('DB_USER', 'shinalee'),
-            'PASSWORD': os.environ.get('DB_PASSWORD', 'therapist2009'),
-            'HOST': os.environ.get('DB_HOST', 'localhost'),
-            'PORT': os.environ.get('DB_PORT', '9432')
+            'NAME': os.getenv('DB_NAME', 'knowledge'),
+            'USER': os.getenv('DB_USER', 'shinalee'),
+            'PASSWORD': os.getenv('DB_PASSWORD', 'therapist2009'),
+            'HOST': os.getenv('DB_HOST', 'localhost'),
+            'PORT': os.getenv('DB_PORT', '9432')
         }
     }
 
@@ -127,5 +130,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_DIR, 'static'),
+]

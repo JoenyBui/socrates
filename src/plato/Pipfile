@@ -5,8 +5,10 @@ name = "pypi"
 
 [packages]
 django = "*"
-"psycopg2" = "*"
 "psycopg2-binary" = "*"
+uwsgi = "*"
+djangorestframework-jwt = "*"
+djangorestframework = "*"
 
 [dev-packages]
 
