@@ -37,6 +37,8 @@ services:
       - DEBUG=True 
     ports:
       - "8000:8000"
+    networks:
+      - nginx_network      
   plato-nginx:
     restart: always
     container_name: plato-nginx
@@ -46,6 +48,8 @@ services:
       - "8080:80"
     depends_on:
       - plato
+    networks: 
+      - nginx_network
   redis:
     container_name: socrates-redis
     image: redis:3.2-alpine
@@ -78,6 +82,10 @@ services:
     depends_on:
       - postgres
     
+networks:
+  nginx_network:
+    driver: bridge
+
 volumes:
   redis_data:
   psqldata:

@@ -1,5 +1,5 @@
-upstream dynamic {
-  server 127.0.0.1:8000       weight=5;
+upstream dynamic_server {
+  server plato:8000;
 }
 
 server {
@@ -17,13 +17,23 @@ server {
     alias /code/media/;
   }
 
-  # Finally, send all non-media request to the Django Server
   location / {
-    try_files $uri @wsgi;
+    proxy_pass http://dynamic_server;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $host;
+    proxy_redirect off;
+    if (!-f $request_filename) {
+        proxy_pass http://dynamic_server;
+        break;
+    }
   }
+  # Finally, send all non-media request to the Django Server
+  #location / {
+  #  try_files $uri @wsgi;
+  #}
 
-  location @wsgi {
-    include uwsgi_params;
-    uwsgi_pass 127.0.0.1:8000;
-  }
+  #location @wsgi {
+  #  include uwsgi_params;
+  #  uwsgi_pass 127.0.0.1:8000;
+  #}
 }
