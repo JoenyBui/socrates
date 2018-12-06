@@ -81,7 +81,10 @@ services:
       - .:/flyway/sql
     depends_on:
       - postgres
-    
+  node:
+    container_name: socrates-docker
+    build:
+      context: ./src/node
 networks:
   nginx_network:
     driver: bridge

@@ -17,6 +17,7 @@ server {
     alias /code/media/;
   }
 
+  # finally send all non-media request to uwsgi
   location / {
     proxy_pass http://dynamic_server;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -27,13 +28,4 @@ server {
         break;
     }
   }
-  # Finally, send all non-media request to the Django Server
-  #location / {
-  #  try_files $uri @wsgi;
-  #}
-
-  #location @wsgi {
-  #  include uwsgi_params;
-  #  uwsgi_pass 127.0.0.1:8000;
-  #}
 }

@@ -9,6 +9,7 @@ django = "*"
 uwsgi = "*"
 djangorestframework-jwt = "*"
 djangorestframework = "*"
+"psycopg2" = "*"
 
 [dev-packages]
 
