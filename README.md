@@ -95,7 +95,21 @@ docker run [options] [repo/]containerimage[:tag\digest] [command to run]
 ## Docker Compose Setup
 
 ### Re/Build the images first
+```
 docker-compose build
+```
+
+Start a cluster:
+
+```
+docker-compose up -d
+```
+
+Add more brokers:
+
+```
+docker-compose scale kafka=3
+```
 
 ### Running just the volume
 docker-compose start redis postgres
@@ -109,3 +123,5 @@ HOST:CONTAINER
 
 ### [expose](https://docs.docker.com/compose/compose-file/#expose)
 Expose ports without publishing them tot he host machine - they'll only be accessible to linked services.
+
+DOCKER HOST IP ADDRESS = host.docker.internal

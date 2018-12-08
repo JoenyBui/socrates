@@ -1,20 +1,20 @@
 version: '3.6'
 services:
-  # app:
-  #   container_name: socrates-app
-  #   build:
-  #     context: ./src/app
-  #   depends_on:
-  #     - redis
-  #     - postgres
-  #     - flyway
-  #   environment:
-  #     - REDIS_HOST=redis
-  #     - REDIS_PORT=6379
-  #     - POSTGRES_HOST=postgres
-  #     - POSTGRES_PORT=5432
-  #   ports:
-  #     - "5000:5000"
+  app:
+    container_name: socrates-app
+    build:
+      context: ./src/app
+    depends_on:
+      - redis
+      - postgres
+      - flyway
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+    ports:
+      - "5000:5000"
   plato:
     container_name: plato-app
     build:
@@ -85,6 +85,20 @@ services:
     container_name: socrates-docker
     build:
       context: ./src/node
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    build: ./src/kafka
+    ports:
+      - "9092"
+    environment:
+      # KAFKA_ADVERTISED_HOST_NAME: host.docker.internal
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 networks:
   nginx_network:
     driver: bridge

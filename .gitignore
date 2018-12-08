@@ -4,3 +4,4 @@
 *.pyo
 .vscode
 db.sqlite3
+*.code-workspace
